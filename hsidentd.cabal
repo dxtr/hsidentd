@@ -1,13 +1,13 @@
 name:                hsidentd
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            Ident daemon replying with random hexadecimals
 description:         Please see README.md
 homepage:            https://github.com/githubuser/hsidentd#readme
-license:             BSD3
+license:             ISC
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
+author:              dxtr
+maintainer:          kim _AT_ dxtr _DOT_ im
+copyright:           2016 dxtr
 category:            Web
 build-type:          Simple
 -- extra-source-files:

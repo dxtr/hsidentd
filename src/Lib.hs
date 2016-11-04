@@ -32,8 +32,7 @@ portMax = 2^16-1
 portMin = 1
 
 generateResponse :: Maybe [ByteString] -> ByteString -> ByteString
-generateResponse Nothing _ =
-  "0, 0 : ERROR : UNKNOWN-ERROR\r\n"
+generateResponse Nothing _ = "0, 0 : ERROR : UNKNOWN-ERROR\r\n"
 generateResponse (Just [msg, serverPort, clientPort]) user
   | serverPortVal < portMin || serverPortVal > portMax || clientPortVal < portMin || clientPortVal > portMax = pack $ printf "%s, %s : ERROR : INVALID-PORT\r\n" serverPortStr clientPortStr
   | otherwise = do
