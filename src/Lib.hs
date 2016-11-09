@@ -60,11 +60,18 @@ acceptClient socket = forever $ do
   threadId <- forkIO $ handleClient client
   return ()
 
+setSockOpt :: Socket -> SocketOption -> Int -> IO ()
+setSockOpt sock opt val
+  | isSupportedSocketOption opt = setSocketOption sock opt val
+  | otherwise = return ()
+  
 listener :: Family -> IO ()
 listener af = do
   serverAddr <- head <$> myGetAddrInfo
   sock <- socket af Stream defaultProtocol
-  when (af == AF_INET6) $ setSocketOption sock IPv6Only 0
+  when (af == AF_INET6) $ setSockOpt sock IPv6Only 1
+  setSockOpt sock ReuseAddr 1
+  setSockOpt sock ReusePort 1
   bindSocket sock (addrAddress serverAddr)
   listen sock backlog
   acceptClient sock
@@ -83,7 +90,6 @@ mainLoop = withSocketsDo $ do
   where
     asyncListener = async . listener
     addressFamilies = [AF_INET, AF_INET6] :: [Family]
---    listenFuncs = map (\af -> )
 
 daemonize :: IO () -> IO ()
 daemonize f = do
